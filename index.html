@@ -7325,6 +7325,575 @@ window.addEventListener(
 <!-- =====================================================
      PENUTUP HTML
      ===================================================== -->
+<!-- =====================================================
+     FITUR ALL MEMBER JKT48 2026
+     ===================================================== -->
 
+<style>
+
+.member-toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.member-toolbar input{
+  flex:1;
+  min-width:200px;
+}
+
+.member-filter{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.member-filter button{
+  border:0;
+  padding:9px 13px;
+  border-radius:20px;
+  cursor:pointer;
+  background:#eee;
+}
+
+.member-filter button.active{
+  background:#e91e63;
+  color:white;
+}
+
+.member-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fill,minmax(180px,1fr));
+  gap:15px;
+}
+
+.member-card{
+  background:white;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  cursor:pointer;
+  transition:.25s;
+}
+
+.member-card:hover{
+  transform:translateY(-5px);
+}
+
+.member-photo{
+  height:190px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e91e63,
+      #8b5cf6
+    );
+
+  color:white;
+  font-size:42px;
+  font-weight:bold;
+}
+
+.member-info{
+  padding:14px;
+}
+
+.member-name{
+  font-weight:700;
+}
+
+.member-team{
+  color:#e91e63;
+  font-size:12px;
+  margin-top:5px;
+}
+
+</style>
+
+
+<script>
+
+/* =====================================================
+   DATA MEMBER JKT48 2026
+   Berdasarkan daftar member resmi JKT48
+   ===================================================== */
+
+const JKT48_MEMBERS=[
+
+  /* TEAM LOVE */
+
+  {name:"Alya Amanda",team:"Team Love"},
+  {name:"Anindya Ramadhani",team:"Team Love"},
+  {name:"Aurellia",team:"Team Love"},
+  {name:"Aurhel Alana",team:"Team Love"},
+  {name:"Cathleen Nixie",team:"Team Love"},
+  {name:"Celline Thefani",team:"Team Love"},
+  {name:"Cynthia Yaputera",team:"Team Love"},
+  {name:"Fiony Alveria",team:"Team Love"},
+  {name:"Fritzy Rosmerian",team:"Team Love"},
+  {name:"Grace Octaviani",team:"Team Love"},
+  {name:"Hillary Abigail",team:"Team Love"},
+  {name:"Indah Cahya",team:"Team Love"},
+  {name:"Jazzlyn Trisha",team:"Team Love"},
+  {name:"Michelle Alexandra",team:"Team Love"},
+  {name:"Nayla Suji",team:"Team Love"},
+
+
+  /* TEAM DREAM */
+
+  {name:"Adeline Wijaya",team:"Team Dream"},
+  {name:"Chelsea Davina",team:"Team Dream"},
+  {name:"Febriola Sinambela",team:"Team Dream"},
+  {name:"Freya Jayawardana",team:"Team Dream"},
+  {name:"Gabriela Abigail",team:"Team Dream"},
+  {name:"Gita Sekar Andarini",team:"Team Dream"},
+  {name:"Greesella Adhalia",team:"Team Dream"},
+  {name:"Helisma Putri",team:"Team Dream"},
+  {name:"Jesslyn Elly",team:"Team Dream"},
+  {name:"Marsha Lenathea",team:"Team Dream"},
+  {name:"Nina Tutachia",team:"Team Dream"},
+  {name:"Oline Manuel",team:"Team Dream"},
+  {name:"Shabilqis Naila",team:"Team Dream"},
+
+
+  /* TEAM PASSION */
+
+  {name:"Abigail Rachel",team:"Team Passion"},
+  {name:"Angelina Christy",team:"Team Passion"},
+  {name:"Catherina Vallencia",team:"Team Passion"},
+  {name:"Cornelia Vanisa",team:"Team Passion"},
+  {name:"Dena Natalia",team:"Team Passion"},
+  {name:"Desy Natalia",team:"Team Passion"},
+  {name:"Feni Fitriyanti",team:"Team Passion"},
+  {name:"Jessica Chandra",team:"Team Passion"},
+  {name:"Kathrina Irene",team:"Team Passion"},
+  {name:"Lulu Salsabila",team:"Team Passion"},
+  {name:"Michelle Levia",team:"Team Passion"},
+  {name:"Mutiara Azzahra",team:"Team Passion"},
+  {name:"Raisha Syifa",team:"Team Passion"},
+  {name:"Ribka Budiman",team:"Team Passion"},
+  {name:"Victoria Kimberly",team:"Team Passion"},
+
+
+  /* TRAINEE */
+
+  {name:"Afera Thalia",team:"Trainee"},
+  {name:"Astrella Virgiananda",team:"Trainee"},
+  {name:"Bong Aprilli",team:"Trainee"},
+  {name:"Carissa Dini",team:"Trainee"},
+  {name:"Christabella Bonita",team:"Trainee"},
+  {name:"Fahira Putri",team:"Trainee"},
+  {name:"Fatimah Azzahra",team:"Trainee"},
+  {name:"Hagia Sopia",team:"Trainee"},
+  {name:"Heidi Suyangga",team:"Trainee"},
+  {name:"Humaira Ramadhani",team:"Trainee"},
+  {name:"Jacqueline Immanuela",team:"Trainee"},
+  {name:"Jemima Evodie",team:"Trainee"},
+  {name:"Maxine Faye",team:"Trainee"},
+  {name:"Mikaela Kusjanto",team:"Trainee"},
+  {name:"Nur Intan",team:"Trainee"},
+  {name:"Putry Jazyta",team:"Trainee"},
+  {name:"Ralyne Van Irwan",team:"Trainee"},
+  {name:"Sona Kalyana",team:"Trainee"}
+
+];
+
+
+/* =====================================================
+   HALAMAN ALL MEMBER
+   ===================================================== */
+
+function allMemberPage(){
+
+  return `
+
+    <div class="jkt-info">
+
+      <h2>🌸 ALL MEMBER JKT48</h2>
+
+      <p>
+        Daftar member JKT48 2026.
+        Gunakan pencarian atau filter tim
+        untuk menemukan member.
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="member-toolbar">
+
+        <input
+          id="memberSearch"
+          placeholder="🔎 Cari nama member..."
+          oninput="renderMembers()">
+
+      </div>
+
+
+      <div class="member-filter">
+
+        <button
+          class="active"
+          data-team="all"
+          onclick="setMemberTeam('all',this)">
+          Semua
+        </button>
+
+        <button
+          data-team="Team Love"
+          onclick="setMemberTeam('Team Love',this)">
+          Team Love
+        </button>
+
+        <button
+          data-team="Team Dream"
+          onclick="setMemberTeam('Team Dream',this)">
+          Team Dream
+        </button>
+
+        <button
+          data-team="Team Passion"
+          onclick="setMemberTeam('Team Passion',this)">
+          Team Passion
+        </button>
+
+        <button
+          data-team="Trainee"
+          onclick="setMemberTeam('Trainee',this)">
+          Trainee
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="memberGrid"
+      class="member-grid"
+      style="margin-top:20px">
+
+    </div>
+
+  `;
+
+}
+
+
+let selectedMemberTeam="all";
+
+
+/* =====================================================
+   FILTER TEAM
+   ===================================================== */
+
+function setMemberTeam(team,button){
+
+  selectedMemberTeam=team;
+
+  document
+    .querySelectorAll(".member-filter button")
+    .forEach(x=>x.classList.remove("active"));
+
+  button.classList.add("active");
+
+  renderMembers();
+
+}
+
+
+/* =====================================================
+   RENDER MEMBER
+   ===================================================== */
+
+function renderMembers(){
+
+  const grid=
+    document.getElementById(
+      "memberGrid"
+    );
+
+  if(!grid)return;
+
+
+  const search=
+    (
+      document.getElementById(
+        "memberSearch"
+      )?.value||""
+    ).toLowerCase();
+
+
+  const members=
+    JKT48_MEMBERS.filter(m=>{
+
+      const matchName=
+        m.name.toLowerCase()
+        .includes(search);
+
+      const matchTeam=
+        selectedMemberTeam==="all" ||
+        m.team===selectedMemberTeam;
+
+      return matchName && matchTeam;
+
+    });
+
+
+  if(!members.length){
+
+    grid.innerHTML=`
+
+      <div class="card"
+           style="
+           grid-column:1/-1;
+           text-align:center">
+
+        😔
+
+        <h3 style="margin-top:8px">
+          Member tidak ditemukan
+        </h3>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML=
+    members.map((m,index)=>{
+
+      const initials=
+        m.name
+          .split(" ")
+          .map(x=>x[0])
+          .join("")
+          .substring(0,2)
+          .toUpperCase();
+
+
+      return `
+
+        <div
+          class="member-card"
+          onclick="showMemberDetail(${index},'${escapeHTML(m.name)}')">
+
+          <div class="member-photo">
+
+            ${initials}
+
+          </div>
+
+
+          <div class="member-info">
+
+            <div class="member-name">
+              ${escapeHTML(m.name)}
+            </div>
+
+            <div class="member-team">
+              ${escapeHTML(m.team)}
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   DETAIL MEMBER
+   ===================================================== */
+
+function showMemberDetail(index,name){
+
+  const member=
+    JKT48_MEMBERS.find(
+      m=>m.name===name
+    );
+
+  if(!member)return;
+
+
+  document.getElementById(
+    "mainModalContent"
+  ).innerHTML=`
+
+    <div class="modal-head">
+
+      <h3>Profil Member</h3>
+
+      <button
+        class="close-btn"
+        onclick="closeModal()">
+        ×
+      </button>
+
+    </div>
+
+
+    <div style="
+      text-align:center">
+
+      <div class="member-photo"
+           style="
+             width:150px;
+             height:150px;
+             margin:auto;
+             border-radius:50%">
+
+        ${member.name
+          .split(" ")
+          .map(x=>x[0])
+          .join("")
+          .substring(0,2)
+          .toUpperCase()}
+
+      </div>
+
+
+      <h2 style="margin-top:18px">
+
+        ${escapeHTML(member.name)}
+
+      </h2>
+
+
+      <p style="
+        color:#e91e63;
+        font-weight:bold;
+        margin-top:5px">
+
+        ${escapeHTML(member.team)}
+
+      </p>
+
+
+      <p style="
+        color:#777;
+        margin-top:15px;
+        line-height:1.6">
+
+        Member JKT48 2026
+
+      </p>
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "mainModal"
+  ).style.display="flex";
+
+}
+
+
+/* =====================================================
+   TAMBAHKAN MENU ALL MEMBER
+   ===================================================== */
+
+const oldBuildSidebarMember=
+  buildSidebar;
+
+buildSidebar=function(){
+
+  oldBuildSidebarMember();
+
+
+  const menu=
+    document.getElementById(
+      "sideMenu"
+    );
+
+  if(!menu)return;
+
+
+  const memberButton=`
+
+    <button
+      class="side-item"
+      onclick="showPage('members')">
+
+      👥
+
+      <span>All Member JKT48</span>
+
+    </button>
+
+  `;
+
+
+  menu.insertAdjacentHTML(
+    "beforeend",
+    memberButton
+  );
+
+};
+
+
+/* =====================================================
+   PATCH SHOW PAGE
+   ===================================================== */
+
+const oldShowPageMember=
+  showPage;
+
+showPage=function(page){
+
+  if(page==="members"){
+
+    updatePageTitle(
+      "All Member JKT48"
+    );
+
+
+    document.getElementById(
+      "content"
+    ).innerHTML=
+      allMemberPage();
+
+
+    renderMembers();
+
+    return;
+
+  }
+
+
+  oldShowPageMember(page);
+
+};
+
+
+/* =====================================================
+   UPDATE JUMLAH MEMBER
+   ===================================================== */
+
+function memberCount(){
+
+  return JKT48_MEMBERS.length;
+
+}
+
+</script>
 </body>
 </html>
